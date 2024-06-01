@@ -25,7 +25,7 @@ const lastPostUser = computed(() => users[posts[thread.lastPostId].userId])
   <div class="thread">
     <div>
       <p>
-        <RouterLink :to="{ name: 'threadView', params: { id: thread['.key'] } }">{{
+        <RouterLink :to="{ name: 'ThreadView', params: { id: thread['.key'] } }">{{
           thread.title
         }}</RouterLink>
       </p>
