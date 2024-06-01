@@ -3,7 +3,7 @@ import ThreadList from '@/components/ThreadList.vue'
 </script>
 
 <template>
-  <div class="col-full">
+  <div class="basis-11/12">
     <h1>Welcome to the forum</h1>
     <ThreadList />
   </div>
