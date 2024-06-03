@@ -22,21 +22,21 @@ const lastPostUser = computed(() => users[posts[thread.lastPostId].userId])
 </script>
 
 <template>
-  <div class="thread">
+  <div class="thread flex items-center justify-between py-1.5 pr-0 pl-5 min-h-11">
     <div>
       <p>
         <RouterLink :to="{ name: 'ThreadView', params: { id: thread['.key'] } }">{{
           thread.title
         }}</RouterLink>
       </p>
-      <p class="text-faded text-xsmall">
+      <p class="text-neutral-600/70 text-sm">
         By <a href="#">{{ user.name }}</a
         >, {{ new Date(thread.publishedAt).toDateString() }}.
       </p>
     </div>
 
     <div class="activity">
-      <p class="replies-count">
+      <p class="basis-4/12">
         {{ replyText }}
       </p>
 

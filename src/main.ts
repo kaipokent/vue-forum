@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import PrimeVue from 'primevue/config'
+import { plugin, defaultConfig } from '@formkit/vue'
 import Aura from '@/presets/aura'
 import './assets/base.css'
 
@@ -15,5 +16,6 @@ app.use(PrimeVue, {
   pt: Aura
 })
 app.use(router)
+app.use(plugin, defaultConfig)
 
 app.mount('#app')

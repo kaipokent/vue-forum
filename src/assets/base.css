@@ -195,18 +195,6 @@ img {
     font-size: 26px;
 }
 
-.thread-list {
-    padding: 0;
-    background-color: white;
-}
-
-.thread-list .thread {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0 5px 20px;
-    min-height: 45px;
-}
 
 .thread-list .thread:nth-child(odd) {
     background: rgba(73, 89, 96, 0.06);
@@ -215,10 +203,6 @@ img {
 
 .thread-list .thread:last-child {
     border-bottom-left-radius: 0;
-}
-
-.thread-list .thread .replies-count {
-    flex-basis: 35%;
 }
 
 .thread-list .thread .activity {
@@ -1241,64 +1225,6 @@ input {
 
 form {
     margin: 0;
-}
-
-.form-input {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-sizing: border-box;
-    font: inherit;
-    padding: 5px 10px;
-    transition: all 0.3s ease;
-    width: 100%;
-    color: #505050;
-    background-color: #fdfdfd;
-    min-height: 43px;
-}
-
-.form-input:disabled {
-    cursor: no-drop;
-    background: #F5F8FE;
-    color: #bbbbbb;
-}
-
-.form-input:disabled::placeholder {
-    color: #bbbbbb;
-}
-
-.form-input::placeholder {
-    font-size: inherit;
-    font-weight: 300;
-    color: #878787;
-}
-
-.form-input:focus {
-    outline: none;
-    border: 1px solid #c7c7c7;
-    color: #434343;
-    background-color: white;
-}
-
-.form-input:invalid {
-    border-color: #C82543;
-}
-
-.form-input:invalid ~ .form-error {
-    display: block;
-}
-
-@media (min-width: 240px) and (max-width: 400px) {
-    .form-input {
-        padding-left: 10px;
-        height: 50px;
-    }
-}
-
-textarea.form-input {
-    padding-top: 7px;
-    padding-right: 2px;
-    padding-bottom: 0px;
-    min-height: 110px;
 }
 
 .input-error {
