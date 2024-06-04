@@ -8,7 +8,7 @@ importers:
 
   .:
     dependencies:
-      '@formkit/core':
+      '@formkit/addons':
         specifier: ^1.6.5
         version: 1.6.5
       '@formkit/vue':
@@ -27,6 +27,9 @@ importers:
         specifier: ^4.3.0
         version: 4.3.2(vue@3.4.27(typescript@5.4.5))
     devDependencies:
+      '@formkit/core':
+        specifier: ^1.6.5
+        version: 1.6.5
       '@rushstack/eslint-patch':
         specifier: ^1.8.0
         version: 1.10.3
@@ -426,6 +429,12 @@ packages:
   '@eslint/js@8.57.0':
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@formkit/addons@1.6.5':
+    resolution: {integrity: sha512-lI42uFX0a1UV/0J4ZzfuBAdoPykpDLOpH/fPNn6vI8hAKtkbOiStNZDex0r3aam0z3O1vPCtgUtsBCdWBVzxkw==}
+
+  '@formkit/auto-animate@0.8.2':
+    resolution: {integrity: sha512-SwPWfeRa5veb1hOIBMdzI+73te5puUBHmqqaF1Bu7FjvxlYSz/kJcZKSa9Cg60zL0uRNeJL2SbRxV6Jp6Q1nFQ==}
 
   '@formkit/core@1.6.5':
     resolution: {integrity: sha512-LLq8+vLd9ddPYA0NkyvnKycN4ESU8Wqcl9TrllPyU/axduJunSIJMZz4LHzlwK8G26b0pQNegXF/hXaj4wbmng==}
@@ -2619,6 +2628,15 @@ snapshots:
       - supports-color
 
   '@eslint/js@8.57.0': {}
+
+  '@formkit/addons@1.6.5':
+    dependencies:
+      '@formkit/auto-animate': 0.8.2
+      '@formkit/core': 1.6.5
+      '@formkit/inputs': 1.6.5
+      '@formkit/utils': 1.6.5
+
+  '@formkit/auto-animate@0.8.2': {}
 
   '@formkit/core@1.6.5':
     dependencies:
