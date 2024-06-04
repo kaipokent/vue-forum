@@ -2,7 +2,8 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import PrimeVue from 'primevue/config'
 import { plugin, defaultConfig } from '@formkit/vue'
-import Aura from '@/presets/aura'
+import config from './formkit.config.ts'
+import Aura from 'primevue/themes/aura'
 import './assets/base.css'
 
 import App from './App.vue'
@@ -12,10 +13,15 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(PrimeVue, {
-  unstyled: true,
-  pt: Aura
+  theme: {
+    preset: Aura,
+    options: {
+      prefix: 'p',
+      darkModeSelector: '.p-dark'
+    }
+  }
 })
 app.use(router)
-app.use(plugin, defaultConfig)
+app.use(plugin, defaultConfig(config))
 
 app.mount('#app')

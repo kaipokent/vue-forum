@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -800,16 +799,6 @@ span.online::before {
 
 .text-faded, .forum-stats ul li, .thread-list .thread .created_at, .post-content blockquote.big .author span.time, .post-content blockquote.small .author .time, .post-content blockquote.simple .author, .activity-list .activity .activity-header .title span, .activity-list .activity .thread-details, span.offline {
     color: rgba(84, 84, 84, 0.7);
-}
-
-h1 {
-    font-size: 32px;
-}
-
-@media (min-width: 240px) and (max-width: 720px) {
-    h1 {
-        font-size: 24px;
-    }
 }
 
 .text-lead, .forum-list .forum-listing .threads-count .count, .profile-card .stats span, .modal-container .modal .modal-header .title {
@@ -2106,10 +2095,6 @@ li {
 
 li a {
     text-decoration: none;
-}
-
-p {
-    margin: 0;
 }
 
 figure {
