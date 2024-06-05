@@ -1,5 +1,5 @@
 export type Post = {
-  edited: {
+  edited?: {
     at: number
     by: string
     moderated: boolean
@@ -11,10 +11,6 @@ export type Post = {
   '.key': string
 }
 
-export type Posts = {
-  [key: string]: Post
-}
-
 export type Thread = {
   contributors: {
     [key: string]: string
@@ -23,7 +19,7 @@ export type Thread = {
   forumId: string
   lastPostAt: number
   lastPostId: string
-  posts: Posts
+  posts: string
   publishedAt: number
   slug: string
   title: string
