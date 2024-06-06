@@ -2,6 +2,7 @@
 import { users } from '../data.json'
 import { computed } from 'vue'
 import type { Post } from '@/utils/types'
+import { formatTimeAgo } from '@vueuse/core'
 
 const { post } = defineProps<{ post: Post }>()
 
@@ -14,6 +15,12 @@ const postCountText = computed(() => {
     const postCount = Object.keys(posts).length
     return `${postCount} post${postCount > 1 ? 's' : ''}`
   }
+})
+const publishedDate = computed(() => {
+  return new Date(post.publishedAt * 1000)
+})
+const displayDate = computed(() => {
+  return formatTimeAgo(publishedDate.value)
 })
 </script>
 
@@ -30,11 +37,9 @@ const postCountText = computed(() => {
     </div>
 
     <div class="post-content">
-      <div>
-        {{ post.text }}
-      </div>
+      {{ post.text }}
     </div>
 
-    <div class="post-date text-faded">6 hours ago</div>
+    <div class="post-date text-faded" :title="publishedDate.toDateString()">{{ displayDate }}</div>
   </div>
 </template>

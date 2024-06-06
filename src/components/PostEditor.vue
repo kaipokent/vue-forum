@@ -13,7 +13,7 @@ const submitForm = (data: Record<string, string>) => {
   const postId = `newpost-${Math.random()}`
   const post = {
     text: data.postBody,
-    publishedAt: Math.floor(Date.now() / 1000),
+    publishedAt: Date.now() / 1000,
     threadId: thread['.key'],
     userId: 'jUjmgCurRRdzayqbRMO7aTG9X1G2',
     '.key': postId
