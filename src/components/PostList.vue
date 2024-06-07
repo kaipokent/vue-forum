@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { posts } from '../data.json'
 import PostListItem from '@/components/PostListItem.vue'
-import type { Posts } from '@/utils/types'
+import type { Post } from '@/utils/types.ts'
 
-const { threadPosts } = defineProps<{ threadPosts: Posts }>()
+const { threadPosts } = defineProps<{ threadPosts: Post[] }>()
 </script>
 
 <template>
