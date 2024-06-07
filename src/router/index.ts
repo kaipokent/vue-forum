@@ -3,7 +3,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // On 404, redirect to Home for now
     {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
@@ -16,8 +15,18 @@ const router = createRouter({
     },
     {
       path: '/thread/:id',
-      name: 'ThreadView',
+      name: 'Thread',
       component: () => import('@/views/ThreadView.vue')
+    },
+    {
+      path: '/forum/:id',
+      name: 'Forum',
+      component: () => import('@/views/ForumView.vue')
+    },
+    {
+      path: '/category/:id',
+      name: 'Category',
+      component: () => import('@/views/CategoryView.vue')
     }
   ]
 })
