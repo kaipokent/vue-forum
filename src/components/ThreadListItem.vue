@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import type { Thread } from '@/utils/types'
-import { users, posts } from '../data.json'
 import { computed } from 'vue'
+import { usePostsStore } from '@/stores/PostsStore.ts'
+import { useUsersStore } from '@/stores/UsersStore.ts'
 
 const { thread } = defineProps<{ thread: Thread }>()
+const postsStore = usePostsStore()
+const usersStore = useUsersStore()
 
 const replyText = computed(() => {
   const replies = Object.keys(thread.posts).length - 1
@@ -17,8 +20,8 @@ const replyText = computed(() => {
   return replyText
 })
 
-const user = computed(() => users[thread.userId])
-const lastPostUser = computed(() => users[posts[thread.lastPostId].userId])
+const user = computed(() => usersStore.users[thread.userId])
+const lastPostUser = computed(() => usersStore.users[postsStore.posts[thread.lastPostId].userId])
 </script>
 
 <template>

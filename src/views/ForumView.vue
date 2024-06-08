@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import ThreadList from '@/components/ThreadList.vue'
 import { useRoute } from 'vue-router'
-import sourceData from '../data.json'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
+import { useForumsStore } from '@/stores/ForumsStore.ts'
+import { useThreadsStore } from '@/stores/ThreadsStore.ts'
 
 const route = useRoute()
+const forumsStore = useForumsStore()
+const threadsStore = useThreadsStore()
 
-const forums = ref(sourceData.forums)
-const threads = ref(sourceData.threads)
-
-const forum = computed(() => forums.value[route.params.id])
+const forum = computed(() => forumsStore.forums[route.params.id])
 const forumThreads = computed(() =>
-  Object.values(threads.value).filter((thread) => thread.forumId === route.params.id)
+  threadsStore.values.filter((thread) => thread.forumId === route.params.id)
 )
 </script>
 

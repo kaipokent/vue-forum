@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref, type UnwrapRef } from 'vue'
 import { useRoute } from 'vue-router'
-import sourceData from '../data.json'
-import type { Category, Forum } from '@/utils/types.ts'
+import type { Category } from '@/utils/types.ts'
 import CategoryListItem from '@/components/CategoryListItem.vue'
+import { useCategoriesStore } from '@/stores/CategoriesStore.ts'
 
 const route = useRoute()
+const categoriesStore = useCategoriesStore()
 
-const category: Category = ref(sourceData.categories[route.params.id])
+const category: UnwrapRef<Category> = ref(categoriesStore.categories[route.params.id])
 </script>
 
 <template>
