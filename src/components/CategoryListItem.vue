@@ -2,14 +2,14 @@
 import { computed } from 'vue'
 import type { Category, Forum } from '@/utils/types.ts'
 import ForumList from '@/components/ForumList.vue'
-import sourceData from '../data.json'
+import { useForumsStore } from '@/stores/ForumsStore.ts'
 
 const { category } = defineProps<{ category: Category }>()
 
-const forums = computed(() => {
-  return Object.values(sourceData.forums).filter(
-    (forum: Forum) => forum.categoryId === category['.key']
-  )
+const forums = useForumsStore()
+
+const forumsForCategory = computed(() => {
+  return forums.values.filter((forum: Forum) => forum.categoryId === category['.key'])
 })
 </script>
 
@@ -21,6 +21,6 @@ const forums = computed(() => {
       </RouterLink>
     </h2>
 
-    <ForumList :forums="forums" />
+    <ForumList :forums="forumsForCategory" />
   </div>
 </template>

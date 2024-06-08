@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import sourceData from '../data.json'
-import CategoryList from '@/components/CategoryList.vue'
+import { useCategoriesStore } from '@/stores/CategoriesStore.ts'
+import CategoryListItem from '@/components/CategoryListItem.vue'
 
-const categories = ref(Object.values(sourceData.categories))
+const categoriesStore = useCategoriesStore()
 </script>
 
 <template>
   <div class="basis-11/12">
     <h1>Welcome to the forum</h1>
-    <CategoryList :categories="categories" />
+    <CategoryListItem
+      v-for="category in categoriesStore.values"
+      :key="category['.key']"
+      :category="category"
+    />
   </div>
 </template>

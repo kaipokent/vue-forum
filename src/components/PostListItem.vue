@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { users } from '../data.json'
 import { computed } from 'vue'
 import type { Post } from '@/utils/types'
+import { useUsersStore } from '@/stores/UsersStore.ts'
 
 const { post } = defineProps<{ post: Post }>()
+const usersStore = useUsersStore()
 
-const user = computed(() => users[post.userId])
+const user = computed(() => usersStore.users[post.userId])
 const postCountText = computed(() => {
   const posts = user.value?.posts
   if (!posts) {
