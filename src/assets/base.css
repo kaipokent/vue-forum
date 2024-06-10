@@ -782,44 +782,13 @@ span.online::before {
     margin-right: 5px;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #263959;
-    height: 80px;
-    padding: 0 20px;
+header .logo {
+    width: 40px;
 }
 
 @media (min-width: 240px) and (max-width: 720px) {
-    .header {
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 10px;
-        height: 60px;
-    }
-}
-
-.logo {
-    float: left;
-}
-
-.svg-logo {
-    height: 62px;
-    width: 56px;
-}
-
-@media (min-width: 240px) and (max-width: 720px) {
-    .svg-logo {
-        height: 45px;
-        width: 40px;
-    }
-}
-
-@media (min-width: 240px) and (max-width: 400px) {
-    .svg-logo {
-        height: 40px;
-        width: 35px;
+    header .logo {
+        width: 30px;
     }
 }
 
@@ -958,98 +927,6 @@ ul {
     padding: 0;
 }
 
-.navbar {
-    width: 100%;
-    display:flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-}
-
-.navbar ul {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    /*height: 100%;*/
-}
-
-.navbar-item, .navbar-mobile-item {
-    display: inline-block;
-    border-right: 1px solid #3c4d6a;
-    vertical-align: middle;
-}
-
-ul .navbar-item:last-child, ul .navbar-mobile-item:last-child {
-    border-right: none;
-}
-
-.navbar-item a, .navbar-mobile-item a {
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-@media (min-width: 240px) and (max-width: 720px) {
-    .navbar-item a, .navbar-mobile-item a {
-        padding: 10px 0px;
-    }
-}
-
-.navbar-item a:hover, .navbar-mobile-item a:hover {
-    color: #57AD8D;
-    transition: all .3s ease;
-}
-
-.navbar-item a:active, .navbar-mobile-item a:active {
-    color: #57AD8D;
-}
-
-@media (min-width: 240px) and (max-width: 720px) {
-    .navbar-item, .navbar-mobile-item {
-        display: block;
-        border: none;
-        margin: 20px 0;
-    }
-}
-
-@media (min-width: 240px) and (max-width: 720px) {
-    .navbar {
-        display: none;
-        position: absolute;
-        z-index: 10;
-        padding: 10px 10px 10px;
-        background: #263959;
-        width: 100%;
-        left: 0;
-        top: 60px;
-    }
-}
-
-@media (min-width: 240px) and (max-width: 720px) {
-    .navbar-open {
-        display: flex;
-        transition: all 0.6s ease;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-    }
-
-    .navbar-open .navbar-item, .navbar-open .navbar-mobile-item {
-        margin: 6px 0;
-    }
-
-    .navbar-open ul {
-        flex: 1;
-        justify-content: flex-start;
-        align-items: flex-start;
-        flex-direction: column;
-        padding-left: 20px;
-    }
-}
-
-.signs .navbar-item, .signs .navbar-mobile-item {
-    border-right: none;
-}
-
 .a-active {
     color: #57AD8D;
 }
@@ -1126,16 +1003,6 @@ ul .navbar-item:last-child, ul .navbar-mobile-item:last-child {
 
 .btn-hamburger-active .bottom {
     top: 16px;
-}
-
-header > a.logo {
-    width: 50px;
-}
-
-@media (min-width: 240px) and (max-width: 720px) {
-    header > a.logo {
-        width: 35px;
-    }
 }
 
 .title {

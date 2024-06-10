@@ -6,6 +6,7 @@ import config from './formkit.config.ts'
 import Aura from 'primevue/themes/aura'
 import AppDate from '@/components/AppDate.vue'
 import './assets/base.css'
+import 'primeicons/primeicons.css'
 
 import App from './App.vue'
 import router from './router'
