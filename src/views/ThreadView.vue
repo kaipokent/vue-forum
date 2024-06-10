@@ -7,6 +7,8 @@ import type { Post } from '@/utils/types.ts'
 import { useThreadsStore } from '@/stores/ThreadsStore.ts'
 import { usePostsStore } from '@/stores/PostsStore.ts'
 import { useUsersStore } from '@/stores/UsersStore.ts'
+import { pluralize } from '@/utils/pluralize.ts'
+import { countObjectProperties } from '@/utils/countObjectProperties.ts'
 
 const route = useRoute()
 const threadsStore = useThreadsStore()
@@ -15,10 +17,8 @@ const usersStore = useUsersStore()
 
 const thread = computed(() => threadsStore.threads[route.params.id])
 const user = computed(() => usersStore.users[thread.value.userId])
-const numReplies = computed(() => Object.keys(thread.value.posts).length - 1)
-const numContributors = computed(() =>
-  thread.value.contributors ? Object.keys(thread.value.contributors).length : 0
-)
+const numReplies = computed(() => countObjectProperties(thread.value.posts) - 1)
+const numContributors = computed(() => countObjectProperties(thread.value.contributors))
 
 const addPost = (post: Post) => {
   const postId = post['.key']
@@ -28,15 +28,9 @@ const addPost = (post: Post) => {
 }
 
 const threadCountText = computed(() => {
-  let text
-  if (numReplies.value === 1) {
-    text = `${numReplies.value} reply`
-  } else {
-    text = `${numReplies.value} replies`
-  }
+  let text = pluralize(numReplies.value, 'reply', 'replies')
   if (numContributors.value > 0) {
-    text =
-      text + ` by ${numContributors.value} contributor${numContributors.value === 1 ? '' : 's'}`
+    text = text + ` by ${pluralize(numContributors.value, 'contributor')}`
   }
 
   return text
@@ -53,7 +47,7 @@ const threadCountText = computed(() => {
       <span class="hide-mobile text-faded text-small">{{ threadCountText }}</span>
     </p>
 
-    <PostList :threadPosts="thread.posts" />
+    <PostList :posts="thread.posts" />
 
     <PostEditor :thread="thread" @save="addPost" />
   </div>

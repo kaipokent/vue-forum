@@ -936,25 +936,6 @@ ul {
     height: 8px;
 }
 
-.navbar-user {
-    margin-left: auto;
-}
-
-.navbar-user a {
-    display: flex;
-    align-items: center;
-    color: white;
-}
-
-.navbar-user a:hover .icon-profile {
-    transition: all .4s ease;
-    transform: rotate(-180deg);
-}
-
-.navbar-user img {
-    margin-right: 10px;
-}
-
 .btn-hamburger {
     cursor: pointer;
     height: 30px;
@@ -2382,7 +2363,7 @@ figure {
 }
 
 @media (max-width: 820px) {
-    .desktop-only, .forum-list .forum-listing .threads-count, .forum-list .forum-listing .last-thread, .forum-stats, .thread-list .thread .activity, .navbar-user {
+    .desktop-only, .forum-list .forum-listing .threads-count, .forum-list .forum-listing .last-thread, .forum-stats, .thread-list .thread .activity {
         display: none;
     }
 }

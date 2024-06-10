@@ -3,21 +3,16 @@ import type { Thread } from '@/utils/types'
 import { computed } from 'vue'
 import { usePostsStore } from '@/stores/PostsStore.ts'
 import { useUsersStore } from '@/stores/UsersStore.ts'
+import { pluralize } from '@/utils/pluralize.ts'
+import { countObjectProperties } from '@/utils/countObjectProperties.ts'
 
 const { thread } = defineProps<{ thread: Thread }>()
 const postsStore = usePostsStore()
 const usersStore = useUsersStore()
 
 const replyText = computed(() => {
-  const replies = Object.keys(thread.posts).length - 1
-  let replyText = replies.toString()
-
-  if (replies === 1) {
-    replyText += ' reply'
-  } else {
-    replyText += ' replies'
-  }
-  return replyText
+  const replies = countObjectProperties(thread.posts) - 1
+  return pluralize(replies, 'reply', 'replies')
 })
 
 const user = computed(() => usersStore.users[thread.userId])

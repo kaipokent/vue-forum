@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import type { Post } from '@/utils/types'
 import { useUsersStore } from '@/stores/UsersStore.ts'
+import { countObjectProperties } from '@/utils/countObjectProperties.ts'
 
 const { post } = defineProps<{ post: Post }>()
 const usersStore = useUsersStore()
@@ -12,7 +13,7 @@ const postCountText = computed(() => {
   if (!posts) {
     return '0 posts'
   } else {
-    const postCount = Object.keys(posts).length
+    const postCount = countObjectProperties(posts)
     return `${postCount} post${postCount > 1 ? 's' : ''}`
   }
 })

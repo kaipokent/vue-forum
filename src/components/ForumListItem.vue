@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import type { Forum } from '@/utils/types.ts'
 import { computed } from 'vue'
+import { pluralize } from '../utils/pluralize.ts'
+import { countObjectProperties } from '@/utils/countObjectProperties.ts'
 
 const { forum } = defineProps<{ forum: Forum }>()
 
 const threadCount = computed(() => {
-  if (!forum.threads) {
-    return 0
-  } else {
-    return Object.values(forum.threads).length
-  }
+  return countObjectProperties(forum.threads)
 })
 </script>
 
@@ -25,7 +23,7 @@ const threadCount = computed(() => {
     <div class="threads-count">
       <p>
         <span class="count">{{ threadCount }}</span>
-        {{ threadCount === 1 ? ' thread' : ' threads' }}
+        {{ pluralize(threadCount, 'thread') }}
       </p>
     </div>
 

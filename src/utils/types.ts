@@ -28,12 +28,17 @@ export type Threads = Record<string, Thread>
 
 export type User = {
   avatar: string
+  bio?: string
   email: string
   lastVisitAt: number
   name: string
   registeredAt: number
   username: string
   usernameLower: string
+  threads?: Record<string, string>
+  posts?: Record<string, string>
+  website?: string
+  twitter?: string
   '.key': string
 }
 
