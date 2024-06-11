@@ -3,15 +3,17 @@ import { computed, ref } from 'vue'
 import type { User } from '@/utils/types.ts'
 import { pluralize } from '@/utils/pluralize.ts'
 import { countObjectProperties } from '@/utils/countObjectProperties.ts'
-import { useCloned } from '@vueuse/core'
+import { useCloned, useDateFormat, useTimeAgo } from '@vueuse/core'
 import Button from 'primevue/button'
 import { useUsersStore } from '@/stores/UsersStore.ts'
 
 const { user } = defineProps<{ user: User }>()
 
 const usersStore = useUsersStore()
-
+const memberSince = useDateFormat(user.registeredAt * 1000, 'MMMM YYYY')
+const lastVisited = useTimeAgo(user.lastVisitAt * 1000)
 const { cloned: activeUser } = useCloned(user)
+
 const editing = ref(false)
 
 const userPostsCount = computed(() => countObjectProperties(user.posts))
@@ -119,7 +121,7 @@ const updateUser = () => {
     </div>
 
     <p class="text-xsmall text-faded text-center">
-      Member since june 2003, last visited 4 hours ago
+      Member since {{ memberSince }}, last visited {{ lastVisited }}
     </p>
 
     <hr />

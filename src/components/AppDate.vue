@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { formatTimeAgo } from '@vueuse/core'
+import { useTimeAgo } from '@vueuse/core'
 
 const { classes, timestamp } = defineProps<{ classes?: string; timestamp: number }>()
 
 const publishedDate = computed(() => {
   return new Date(timestamp)
 })
-const displayDate = computed(() => {
-  return formatTimeAgo(publishedDate.value)
-})
+
+const displayDate = useTimeAgo(publishedDate.value)
 </script>
 
 <template>
