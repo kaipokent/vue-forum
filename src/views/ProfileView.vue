@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { useUsersStore } from '@/stores/UsersStore.ts'
-import { computed, ref } from 'vue'
-import { pluralize } from '@/utils/pluralize.ts'
+import { ref, watchEffect } from 'vue'
 import PostList from '@/components/PostList.vue'
-import { countObjectProperties } from '@/utils/countObjectProperties.ts'
 import UserProfileCard from '@/components/UserProfileCard.vue'
 
 const usersStore = useUsersStore()
 
 const user = ref(usersStore.authUser)
+
+watchEffect(() => {
+  user.value = usersStore.authUser
+})
 </script>
 
 <template>

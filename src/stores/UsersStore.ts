@@ -18,6 +18,9 @@ export const useUsersStore = defineStore('users', {
       if (user.posts) {
         user.posts[postId] = postId
       }
+    },
+    updateUser(data: User) {
+      this.users[this.authId] = { ...this.authUser, ...data }
     }
   }
 })

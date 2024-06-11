@@ -1,13 +1,34 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import type { User } from '@/utils/types.ts'
 import { pluralize } from '@/utils/pluralize.ts'
+import { countObjectProperties } from '@/utils/countObjectProperties.ts'
+import { useCloned } from '@vueuse/core'
+import Button from 'primevue/button'
+import { useUsersStore } from '@/stores/UsersStore.ts'
 
 const { user } = defineProps<{ user: User }>()
-import { countObjectProperties } from '@/utils/countObjectProperties.ts'
+
+const usersStore = useUsersStore()
+
+const { cloned: activeUser } = useCloned(user)
+const editing = ref(false)
 
 const userPostsCount = computed(() => countObjectProperties(user.posts))
 const userThreadsCount = computed(() => countObjectProperties(user.threads))
+
+const enableEdit = () => {
+  editing.value = true
+}
+
+const cancel = () => {
+  editing.value = false
+}
+
+const updateUser = () => {
+  usersStore.updateUser(activeUser.value)
+  cancel()
+}
 </script>
 
 <template>
@@ -15,38 +36,92 @@ const userThreadsCount = computed(() => countObjectProperties(user.threads))
     <div class="profile-card flex flex-col">
       <img :src="user.avatar" alt="" class="avatar-xlarge self-center" />
 
-      <h1 class="title">{{ user.username }}</h1>
+      <FormKit
+        v-if="editing"
+        id="userEdit"
+        name="userEdit"
+        type="form"
+        v-model="activeUser"
+        @submit="updateUser"
+      >
+        <FormKit
+          type="text"
+          name="username"
+          label="Username"
+          :value="activeUser.username"
+          validation="required"
+        />
+        <FormKit
+          type="text"
+          label="Name"
+          name="name"
+          :value="activeUser.name"
+          validation="required"
+        />
+        <FormKit
+          type="textarea"
+          name="bio"
+          label="Bio"
+          placeholder="Write a few words about yourself"
+          :help="`${activeUser.bio ? activeUser.bio.length : 0} / 120`"
+          validation="length:0,120"
+          validation-visibility="live"
+          :validation-messages="{
+            length: 'We don\'t need an essay...'
+          }"
+        />
+        <FormKit
+          type="email"
+          name="email"
+          label="Email"
+          :value="activeUser.email"
+          validation="required|email"
+        />
+        <FormKit
+          type="text"
+          name="website"
+          label="Website"
+          :value="activeUser.website"
+          validation="url"
+        />
+        <template #actions="{ state }">
+          <div class="flex space-between mr-5">
+            <Button label="Cancel" :disabled="state.loading" @click="cancel" />
+            <Button type="submit" label="Save" :disabled="state.loading" />
+          </div>
+        </template>
+      </FormKit>
 
-      <p class="text-lead">{{ user.name }}</p>
+      <template v-else>
+        <h1 class="title">{{ user.username }}</h1>
 
-      <p class="text-justify">
-        <span v-if="user.bio">{{ user.bio }}</span>
-        <span v-else>No bio specified.</span>
-      </p>
+        <p class="text-lead">{{ user.name }}</p>
 
-      <span class="online">{{ user.username }} is online</span>
+        <p class="text-justify">
+          <span v-if="user.bio">{{ user.bio }}</span>
+          <span v-else>No bio specified.</span>
+        </p>
 
-      <div class="stats">
-        <span>{{ pluralize(userPostsCount, 'post') }}</span>
-        <span>{{ pluralize(userThreadsCount, 'thread') }}</span>
-      </div>
+        <span class="online">{{ user.username }} is online</span>
 
-      <hr />
+        <div class="stats">
+          <span>{{ pluralize(userPostsCount, 'post') }}</span>
+          <span>{{ pluralize(userThreadsCount, 'thread') }}</span>
+        </div>
 
-      <p v-if="user.website" class="text-large text-center">
-        <i class="fa fa-globe"></i> <a :href="user.website">{{ user.website }}</a>
-      </p>
+        <hr />
+
+        <p v-if="user.website" class="text-large text-center">
+          <i class="fa fa-globe"></i> <a :href="user.website">{{ user.website }}</a>
+        </p>
+        <Button class="ml-5" label="Edit profile" @click="enableEdit" />
+      </template>
     </div>
 
     <p class="text-xsmall text-faded text-center">
       Member since june 2003, last visited 4 hours ago
     </p>
 
-    <div class="text-center">
-      <hr />
-      <a href="edit-profile.html" class="btn-green btn-small">Edit Profile</a>
-    </div>
+    <hr />
   </div>
 </template>
-
-<style scoped></style>
