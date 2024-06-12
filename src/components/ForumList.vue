@@ -2,7 +2,7 @@
 import type { Forum } from '@/utils/types.ts'
 import ForumListItem from '@/components/ForumListItem.vue'
 
-const { forums } = defineProps<{ forums: Record<string, Forum> }>()
+const { forums } = defineProps<{ forums: Forum[] }>()
 </script>
 
 <template>

@@ -19,6 +19,12 @@ const router = createRouter({
       component: () => import('@/views/ThreadView.vue')
     },
     {
+      path: '/forum/:id/new-thread',
+      name: 'ThreadCreate',
+      component: () => import('@/views/ThreadCreateView.vue'),
+      props: true
+    },
+    {
       path: '/forum/:id',
       name: 'Forum',
       component: () => import('@/views/ForumView.vue')

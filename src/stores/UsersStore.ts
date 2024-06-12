@@ -17,6 +17,16 @@ export const useUsersStore = defineStore('users', {
       const user = this.users[userId]
       if (user.posts) {
         user.posts[postId] = postId
+      } else {
+        user.posts = { postId }
+      }
+    },
+    addThreadId(userId: string, threadId: string) {
+      const user = this.users[userId]
+      if (user.threads) {
+        user.threads[threadId] = threadId
+      } else {
+        user.threads = { threadId }
       }
     },
     updateUser(data: User) {

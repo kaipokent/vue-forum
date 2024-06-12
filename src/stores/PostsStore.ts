@@ -9,8 +9,8 @@ interface State {
 export const usePostsStore = defineStore('posts', {
   state: (): State => ({ posts }),
   actions: {
-    addPost(postId: string, post: Post) {
-      this.posts[postId] = post
+    addPost(post: Post) {
+      this.posts[post['.key']] = post
     }
   }
 })

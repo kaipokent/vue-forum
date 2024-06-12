@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { threads } from '../data.json'
-import type { Threads } from '@/utils/types.ts'
+import type { Thread, Threads } from '@/utils/types.ts'
 
 interface State {
   threads: Threads
@@ -14,6 +14,9 @@ export const useThreadsStore = defineStore('threads', {
   actions: {
     addPostId(threadId: string, postId: string) {
       this.threads[threadId].posts[postId] = postId
+    },
+    createThread(thread: Thread) {
+      this.threads[thread['.key']] = thread
     }
   }
 })

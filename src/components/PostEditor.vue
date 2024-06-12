@@ -19,12 +19,12 @@ const submitForm = (data: Record<string, string>) => {
   const postId = `newpost-${Math.random()}`
   const post = {
     text: data.postBody,
-    publishedAt: Date.now() / 1000,
+    publishedAt: Math.floor(Date.now() / 1000),
     threadId: thread['.key'],
     userId: usersStore.authId,
     '.key': postId
   }
-  postsStore.addPost(postId, post)
+  postsStore.addPost(post)
   threadsStore.addPostId(thread['.key'], postId)
   usersStore.addPostId(usersStore.authId, postId)
   reset('postEditor')

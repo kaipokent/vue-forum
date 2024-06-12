@@ -45,9 +45,9 @@ export type User = {
 export type Forum = {
   categoryId: string
   description: string
-  lastPostId: number
+  lastPostId: string
   name: string
-  slug: number
+  slug: string
   threads?: Record<string, string>
   '.key': string
 }

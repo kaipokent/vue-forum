@@ -88,7 +88,7 @@ const updateUser = () => {
         />
         <template #actions="{ state }">
           <div class="flex space-between mr-5">
-            <Button label="Cancel" :disabled="state.loading" @click="cancel" />
+            <Button label="Cancel" :disabled="state.loading" @click="cancel" severity="info" />
             <Button type="submit" label="Save" :disabled="state.loading" />
           </div>
         </template>

@@ -22,7 +22,6 @@ const threadCount = computed(() => {
 
     <div class="threads-count">
       <p>
-        <span class="count">{{ threadCount }}</span>
         {{ pluralize(threadCount, 'thread') }}
       </p>
     </div>

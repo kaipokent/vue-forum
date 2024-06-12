@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import { useForumsStore } from '@/stores/ForumsStore.ts'
 import { useThreadsStore } from '@/stores/ThreadsStore.ts'
+import Button from 'primevue/button'
 
 const route = useRoute()
 const forumsStore = useForumsStore()
@@ -22,7 +23,9 @@ const forumThreads = computed(() =>
         <h1>{{ forum.name }}</h1>
         <p class="text-lead">{{ forum.description }}</p>
       </div>
-      <a href="#" class="btn-green btn-small">Start a thread</a>
+      <RouterLink :to="{ name: 'ThreadCreate', params: { id: forum['.key'] } }">
+        <Button label="Start a thread" />
+      </RouterLink>
     </div>
 
     <div class="basis-11/12 mt-4">

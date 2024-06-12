@@ -8,7 +8,7 @@ import { useCategoriesStore } from '@/stores/CategoriesStore.ts'
 const route = useRoute()
 const categoriesStore = useCategoriesStore()
 
-const category: UnwrapRef<Category> = ref(categoriesStore.categories[route.params.id])
+const category: UnwrapRef<Category> = ref<Category>(categoriesStore.categories[route.params.id])
 </script>
 
 <template>
