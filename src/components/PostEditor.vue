@@ -2,10 +2,16 @@
 import Button from 'primevue/button'
 import { reset } from '@formkit/vue'
 import { ref } from 'vue'
-import type { Post, Thread } from '@/utils/types.ts'
+import type { Thread } from '@/utils/types.ts'
+import { useUsersStore } from '@/stores/UsersStore.ts'
+import { useThreadsStore } from '@/stores/ThreadsStore.ts'
+import { usePostsStore } from '@/stores/PostsStore.ts'
 
 const { thread } = defineProps<{ thread: Thread }>()
-const emits = defineEmits<{ (e: 'save', post: Post): void }>()
+
+const threadsStore = useThreadsStore()
+const postsStore = usePostsStore()
+const usersStore = useUsersStore()
 
 const formData = ref({ postBody: '' })
 
@@ -15,10 +21,12 @@ const submitForm = (data: Record<string, string>) => {
     text: data.postBody,
     publishedAt: Date.now() / 1000,
     threadId: thread['.key'],
-    userId: 'jUjmgCurRRdzayqbRMO7aTG9X1G2',
+    userId: usersStore.authId,
     '.key': postId
   }
-  emits('save', post)
+  postsStore.addPost(postId, post)
+  threadsStore.addPostId(thread['.key'], postId)
+  usersStore.addPostId(usersStore.authId, postId)
   reset('postEditor')
 }
 </script>

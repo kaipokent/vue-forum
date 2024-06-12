@@ -3,29 +3,19 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import PostList from '@/components/PostList.vue'
 import PostEditor from '@/components/PostEditor.vue'
-import type { Post } from '@/utils/types.ts'
 import { useThreadsStore } from '@/stores/ThreadsStore.ts'
-import { usePostsStore } from '@/stores/PostsStore.ts'
 import { useUsersStore } from '@/stores/UsersStore.ts'
 import { pluralize } from '@/utils/pluralize.ts'
 import { countObjectProperties } from '@/utils/countObjectProperties.ts'
 
 const route = useRoute()
 const threadsStore = useThreadsStore()
-const postsStore = usePostsStore()
 const usersStore = useUsersStore()
 
 const thread = computed(() => threadsStore.threads[route.params.id])
 const user = computed(() => usersStore.users[thread.value.userId])
 const numReplies = computed(() => countObjectProperties(thread.value.posts) - 1)
 const numContributors = computed(() => countObjectProperties(thread.value.contributors))
-
-const addPost = (post: Post) => {
-  const postId = post['.key']
-  postsStore.addPost(postId, post)
-  threadsStore.addPostId(route.params.id, postId)
-  usersStore.addPostId('jUjmgCurRRdzayqbRMO7aTG9X1G2', postId)
-}
 
 const threadCountText = computed(() => {
   let text = pluralize(numReplies.value, 'reply', 'replies')
@@ -49,6 +39,6 @@ const threadCountText = computed(() => {
 
     <PostList :posts="thread.posts" />
 
-    <PostEditor :thread="thread" @save="addPost" />
+    <PostEditor :thread="thread" />
   </div>
 </template>
