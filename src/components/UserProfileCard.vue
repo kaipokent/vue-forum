@@ -104,7 +104,7 @@ const updateUser = () => {
           <span v-else>No bio specified.</span>
         </p>
 
-        <span class="online">{{ user.username }} is online</span>
+        <span class="online"><i class="pi pi-user"></i> {{ user.username }} is online</span>
 
         <div class="stats">
           <span>{{ pluralize(userPostsCount, 'post') }}</span>

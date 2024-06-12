@@ -775,12 +775,12 @@ span.online {
     color: #57AD8D;
 }
 
-span.online::before {
-    font-family: FontAwesome;
-    content: "\f2be";
-    font-size: 14px;
-    margin-right: 5px;
-}
+/*span.online::before {*/
+/*    font-family: FontAwesome;*/
+/*    content: "\f2be";*/
+/*    font-size: 14px;*/
+/*    margin-right: 5px;*/
+/*}*/
 
 header .logo {
     width: 40px;
