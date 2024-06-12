@@ -29,7 +29,10 @@ const threadCountText = computed(() => {
 
 <template>
   <div class="basis-10/12 mt-6">
-    <h1>{{ thread.title }}</h1>
+    <h1>
+      {{ thread.title }}
+      <RouterLink :to="{ name: 'ThreadEdit', params: { id: thread.id } }">Edit thread</RouterLink>
+    </h1>
 
     <p>
       By <a href="#">{{ user.name }}</a

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Button from 'primevue/button'
 import { useRouter } from 'vue-router'
 import { useForumsStore } from '@/stores/ForumsStore.ts'
 import { v4 as uuid } from 'uuid'
@@ -8,6 +7,7 @@ import { useUsersStore } from '@/stores/UsersStore.ts'
 import { useThreadsStore } from '@/stores/ThreadsStore.ts'
 import { usePostsStore } from '@/stores/PostsStore.ts'
 import { toSlug } from '@/utils/toSlug.ts'
+import ThreadEditor, { type NewThread } from '@/components/ThreadEditor.vue'
 
 const { id: forumId } = defineProps<{ id: string }>()
 
@@ -18,16 +18,15 @@ const postsStore = usePostsStore()
 const usersStore = useUsersStore()
 
 const forum = ref(forumsStore.forums[forumId])
-const thread = ref()
 
-const save = () => {
+const save = (thread: NewThread) => {
   const threadId = uuid()
   const postId = uuid()
   const publishedAt = Math.floor(Date.now() / 1000)
   const post = {
     '.key': postId,
     publishedAt: publishedAt,
-    text: thread.value.content,
+    text: thread.content,
     threadId: threadId,
     userId: usersStore.authId
   }
@@ -40,8 +39,8 @@ const save = () => {
     lastPostId: postId,
     posts: { [postId]: postId },
     publishedAt: publishedAt,
-    slug: toSlug(thread.value.title),
-    title: thread.value.title,
+    slug: toSlug(thread.title),
+    title: thread.title,
     userId: usersStore.authId
   }
   forumsStore.addThread(forumId, threadId)
@@ -60,30 +59,6 @@ const save = () => {
       Create new thread in <i>{{ forum.name }}</i>
     </h1>
 
-    <FormKit id="userEdit" name="userEdit" type="form" v-model="thread" @submit="save">
-      <FormKit
-        type="text"
-        name="title"
-        label="Title:"
-        :value="thread.title"
-        validation="required"
-      />
-      <FormKit
-        type="textarea"
-        name="content"
-        label="Content:"
-        :value="thread.content"
-        validation="required"
-        outer-class="max-w-full"
-        input-class="min-h-32"
-      />
-
-      <template #actions="{ state }">
-        <div class="flex gap-3">
-          <Button label="Cancel" :disabled="state.loading" @click="router.back()" severity="info" />
-          <Button type="submit" label="Save" :disabled="state.loading" />
-        </div>
-      </template>
-    </FormKit>
+    <ThreadEditor @save="save" />
   </div>
 </template>
