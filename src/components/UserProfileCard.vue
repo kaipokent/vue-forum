@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import type { User } from '@/utils/types.ts'
 import { pluralize } from '@/utils/pluralize.ts'
-import { countObjectProperties } from '@/utils/countObjectProperties.ts'
 import { useCloned, useDateFormat, useTimeAgo } from '@vueuse/core'
 import Button from 'primevue/button'
 import { useUsersStore } from '@/stores/UsersStore.ts'
@@ -16,8 +15,8 @@ const { cloned: activeUser } = useCloned(user)
 
 const editing = ref(false)
 
-const userPostsCount = computed(() => countObjectProperties(user.posts))
-const userThreadsCount = computed(() => countObjectProperties(user.threads))
+const userPostsCount = ref(usersStore.postCount(user['.key']))
+const userThreadsCount = ref(usersStore.threadCount(user['.key']))
 
 const enableEdit = () => {
   editing.value = true

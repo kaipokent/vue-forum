@@ -2,7 +2,6 @@
 import { computed, ref } from 'vue'
 import type { Post } from '@/utils/types'
 import { useUsersStore } from '@/stores/UsersStore.ts'
-import { countObjectProperties } from '@/utils/countObjectProperties.ts'
 import PostEditor, { type NewPost } from '@/components/PostEditor.vue'
 import Button from 'primevue/button'
 import { usePostsStore } from '@/stores/PostsStore.ts'
@@ -21,7 +20,7 @@ const postCountText = computed(() => {
   if (!posts) {
     return '0 posts'
   } else {
-    const postCount = countObjectProperties(posts)
+    const postCount = usersStore.postCount(user.value['.key'])
     return `${postCount} post${postCount > 1 ? 's' : ''}`
   }
 })

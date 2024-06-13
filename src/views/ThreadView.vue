@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import PostList from '@/components/PostList.vue'
 import PostEditor, { type NewPost } from '@/components/PostEditor.vue'
 import { useThreadsStore } from '@/stores/ThreadsStore.ts'
 import { useUsersStore } from '@/stores/UsersStore.ts'
 import { pluralize } from '@/utils/pluralize.ts'
-import { countObjectProperties } from '@/utils/countObjectProperties.ts'
 import { v4 as uuid } from 'uuid'
 import { usePostsStore } from '@/stores/PostsStore.ts'
 
@@ -17,8 +16,8 @@ const usersStore = useUsersStore()
 
 const thread = computed(() => threadsStore.threads[threadId])
 const user = computed(() => usersStore.users[thread.value.userId])
-const numReplies = computed(() => countObjectProperties(thread.value.posts) - 1)
-const numContributors = computed(() => countObjectProperties(thread.value.contributors))
+const numReplies = ref(threadsStore.repliesCount(thread.value['.key']))
+const numContributors = ref(threadsStore.contributorsCount(thread.value['.key']))
 
 const threadCountText = computed(() => {
   let text = pluralize(numReplies.value, 'reply', 'replies')

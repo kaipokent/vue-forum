@@ -9,7 +9,13 @@ interface State {
 export const useThreadsStore = defineStore('threads', {
   state: (): State => ({ threads }),
   getters: {
-    values: (state) => Object.values(state.threads)
+    values: (state) => Object.values(state.threads),
+    repliesCount: (state: State) => (id: string) =>
+      Object.values(state.threads[id].posts)
+        ? Object.values(state.threads[id].posts).length - 1
+        : 0,
+    contributorsCount: (state: State) => (id: string) =>
+      Object.values(state.threads[id].contributors || []).length
   },
   actions: {
     addPostId(threadId: string, postId: string) {

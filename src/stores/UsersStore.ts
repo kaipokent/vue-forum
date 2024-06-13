@@ -10,7 +10,10 @@ interface State {
 export const useUsersStore = defineStore('users', {
   state: (): State => ({ users, authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3' }),
   getters: {
-    authUser: (state) => state.users[state.authId]
+    authUser: (state) => state.users[state.authId],
+    postCount: (state: State) => (id: string) => Object.values(state.users[id].posts || []).length,
+    threadCount: (state: State) => (id: string) =>
+      Object.values(state.users[id].threads || []).length
   },
   actions: {
     addPostId(userId: string, postId: string) {

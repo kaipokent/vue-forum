@@ -4,14 +4,15 @@ import { computed } from 'vue'
 import { usePostsStore } from '@/stores/PostsStore.ts'
 import { useUsersStore } from '@/stores/UsersStore.ts'
 import { pluralize } from '@/utils/pluralize.ts'
-import { countObjectProperties } from '@/utils/countObjectProperties.ts'
+import { useThreadsStore } from '@/stores/ThreadsStore.ts'
 
 const { thread } = defineProps<{ thread: Thread }>()
 const postsStore = usePostsStore()
 const usersStore = useUsersStore()
+const threadsStore = useThreadsStore()
 
 const replyText = computed(() => {
-  const replies = countObjectProperties(thread.posts) - 1
+  const replies = threadsStore.repliesCount(thread['.key'])
   return pluralize(replies, 'reply', 'replies')
 })
 

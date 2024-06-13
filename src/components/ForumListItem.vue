@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import type { Forum } from '@/utils/types.ts'
-import { computed } from 'vue'
 import { pluralize } from '../utils/pluralize.ts'
-import { countObjectProperties } from '@/utils/countObjectProperties.ts'
+import { useForumsStore } from '@/stores/ForumsStore.ts'
 
 const { forum } = defineProps<{ forum: Forum }>()
 
-const threadCount = computed(() => {
-  return countObjectProperties(forum.threads)
-})
+const forumsStore = useForumsStore()
 </script>
 
 <template>
@@ -22,7 +19,7 @@ const threadCount = computed(() => {
 
     <div class="threads-count">
       <p>
-        {{ pluralize(threadCount, 'thread') }}
+        {{ pluralize(forumsStore.threadCount(forum['.key']), 'thread') }}
       </p>
     </div>
 

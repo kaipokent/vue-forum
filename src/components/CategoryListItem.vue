@@ -6,10 +6,10 @@ import { useForumsStore } from '@/stores/ForumsStore.ts'
 
 const { category } = defineProps<{ category: Category }>()
 
-const forums = useForumsStore()
+const forumsStore = useForumsStore()
 
 const forumsForCategory = computed(() => {
-  return forums.values.filter((forum: Forum) => forum.categoryId === category['.key'])
+  return forumsStore.forumValues.filter((forum: Forum) => forum.categoryId === category['.key'])
 })
 </script>
 

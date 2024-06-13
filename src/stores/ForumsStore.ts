@@ -9,7 +9,9 @@ interface State {
 export const useForumsStore = defineStore('forums', {
   state: (): State => ({ forums }),
   getters: {
-    values: (state) => Object.values(state.forums)
+    forumValues: (state) => Object.values(state.forums),
+    threadCount: (state: State) => (id: string) =>
+      Object.values(state.forums[id].threads || []).length
   },
   actions: {
     addThread(forumId: string, threadId: string) {
