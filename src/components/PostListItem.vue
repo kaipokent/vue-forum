@@ -1,11 +1,19 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import type { Post } from '@/utils/types'
 import { useUsersStore } from '@/stores/UsersStore.ts'
 import { countObjectProperties } from '@/utils/countObjectProperties.ts'
+import PostEditor, { type NewPost } from '@/components/PostEditor.vue'
+import Button from 'primevue/button'
+import { usePostsStore } from '@/stores/PostsStore.ts'
 
 const { post } = defineProps<{ post: Post }>()
+
+const postsStore = usePostsStore()
 const usersStore = useUsersStore()
+
+const editing = ref(false)
+const canEdit = ref(post.userId === usersStore.authId)
 
 const user = computed(() => usersStore.users[post.userId])
 const postCountText = computed(() => {
@@ -17,6 +25,18 @@ const postCountText = computed(() => {
     return `${postCount} post${postCount > 1 ? 's' : ''}`
   }
 })
+
+const save = (data: NewPost) => {
+  postsStore.addPost({
+    ...post,
+    text: data.postBody,
+    edited: {
+      at: Math.floor(Date.now() / 1000),
+      by: usersStore.authId,
+      moderated: false
+    }
+  })
+}
 </script>
 
 <template>
@@ -29,12 +49,35 @@ const postCountText = computed(() => {
       </a>
 
       <p class="desktop-only text-small">{{ postCountText }}</p>
+
+      <!--      <Button v-if="canEdit && !editing" label="Edit post" text @click="editing = true" />-->
     </div>
 
-    <div class="post-content">
-      {{ post.text }}
+    <div :class="['post-content']">
+      <div v-if="!editing" class="flex justify-between items-start gap-3">
+        <div>{{ post.text }}</div>
+        <Button
+          v-if="canEdit && !editing"
+          icon="pi pi-pencil"
+          text
+          raised
+          aria-label="Edit post"
+          @click="editing = true"
+          class="min-w-10"
+        />
+      </div>
+      <PostEditor
+        v-else
+        :threadId="post.threadId"
+        :post="post"
+        @save="save"
+        @close="editing = false"
+      />
     </div>
 
-    <AppDate :timestamp="post.publishedAt * 1000" />
+    <div class="post-date text-faded">
+      <div v-if="post.edited" class="edition-info">edited</div>
+      <AppDate :timestamp="post.publishedAt * 1000" />
+    </div>
   </div>
 </template>

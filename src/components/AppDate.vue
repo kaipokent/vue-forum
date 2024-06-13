@@ -12,7 +12,7 @@ const displayDate = useTimeAgo(publishedDate.value)
 </script>
 
 <template>
-  <span :class="['post-date text-faded', classes]" :title="publishedDate.toDateString()">
+  <span :class="classes" :title="publishedDate.toDateString()">
     {{ displayDate }}
   </span>
 </template>

@@ -16,7 +16,8 @@ const router = createRouter({
     {
       path: '/thread/:id',
       name: 'Thread',
-      component: () => import('@/views/ThreadView.vue')
+      component: () => import('@/views/ThreadView.vue'),
+      props: true
     },
     {
       path: '/thread/:id/edit',

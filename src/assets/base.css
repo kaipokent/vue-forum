@@ -388,12 +388,6 @@ img {
     margin-bottom: 20px;
 }
 
-@media (max-width: 820px) {
-    .post {
-        padding: 0;
-    }
-}
-
 .post .user-info {
     display: flex;
     flex-direction: column;
@@ -413,7 +407,6 @@ img {
         order: -2;
         flex-direction: row;
         justify-content: flex-start;
-        background: rgba(73, 89, 96, 0.06);
         margin-right: 0;
         padding: 5px;
         padding-left: 10px;
@@ -448,21 +441,13 @@ img {
     .post .post-date {
         order: -1;
         flex-basis: 40%;
-        background: rgba(73, 89, 96, 0.06);
         padding-right: 10px;
         padding-top: 16px;
         margin-bottom: 0px;
     }
 }
 
-@media (max-width: 720px) {
-    .post {
-        padding: 0px;
-    }
-}
-
 .post-content {
-    display: flex;
     flex: 1 0 83%;
     padding-left: 15px;
     padding-right: 10px;

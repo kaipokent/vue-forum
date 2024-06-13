@@ -2,39 +2,32 @@
 import Button from 'primevue/button'
 import { reset } from '@formkit/vue'
 import { ref } from 'vue'
-import type { Thread } from '@/utils/types.ts'
-import { useUsersStore } from '@/stores/UsersStore.ts'
-import { useThreadsStore } from '@/stores/ThreadsStore.ts'
-import { usePostsStore } from '@/stores/PostsStore.ts'
+import type { Post } from '@/utils/types.ts'
 
-const { thread } = defineProps<{ thread: Thread }>()
+export type NewPost = {
+  postBody: string
+}
 
-const threadsStore = useThreadsStore()
-const postsStore = usePostsStore()
-const usersStore = useUsersStore()
+const { post } = defineProps<{ post?: Post }>()
+const emits = defineEmits<{ (e: 'save', data: NewPost): void; (e: 'close'): void }>()
 
-const formData = ref({ postBody: '' })
+const formData = ref({ postBody: post ? post.text : '' })
+const formId = ref(post ? `postEditor${post['.key']}` : 'postEditor')
 
-const submitForm = (data: Record<string, string>) => {
-  const postId = `newpost-${Math.random()}`
-  const post = {
-    text: data.postBody,
-    publishedAt: Math.floor(Date.now() / 1000),
-    threadId: thread['.key'],
-    userId: usersStore.authId,
-    '.key': postId
+const submitForm = (data: NewPost) => {
+  emits('save', data)
+  if (post) {
+    emits('close')
+  } else {
+    reset(formId.value)
   }
-  postsStore.addPost(post)
-  threadsStore.addPostId(thread['.key'], postId)
-  usersStore.addPostId(usersStore.authId, postId)
-  reset('postEditor')
 }
 </script>
 
 <template>
   <FormKit
-    id="postEditor"
-    name="postEditor"
+    :id="formId"
+    :name="formId"
     type="form"
     @submit="submitForm"
     v-model="formData"
@@ -46,15 +39,24 @@ const submitForm = (data: Record<string, string>) => {
       label="Add a post"
       outer-class="max-w-full"
       input-class="min-h-32"
-      :help="`${formData.postBody.length} / 120`"
-      validation="length:0,120"
+      :help="`${formData.postBody.length} / 800`"
+      validation="length:0,800"
       validation-visibility="live"
       :validation-messages="{
         length: 'Post cannot be more than 120 characters.'
       }"
     />
-    <template #submit="{ state }">
-      <Button type="submit" :disabled="state.loading" label="Submit post" />
+    <template #actions="{ state }">
+      <div class="flex gap-3">
+        <Button
+          v-if="!!post"
+          :disabled="state.loading"
+          label="Cancel"
+          severity="info"
+          @click="emits('close')"
+        />
+        <Button type="submit" :disabled="state.loading" label="Publish" />
+      </div>
     </template>
   </FormKit>
 </template>
