@@ -23,6 +23,11 @@ export const useThreadsStore = defineStore('threads', {
     },
     createThread(thread: Thread) {
       this.threads[thread['.key']] = thread
+    },
+    addContributor(threadId: string, userId: string) {
+      if (!this.threads[threadId].contributors[userId]) {
+        this.threads[threadId].contributors[userId] = userId
+      }
     }
   }
 })

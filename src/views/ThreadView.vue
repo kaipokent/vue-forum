@@ -16,8 +16,8 @@ const usersStore = useUsersStore()
 
 const thread = computed(() => threadsStore.threads[threadId])
 const user = computed(() => usersStore.users[thread.value.userId])
-const numReplies = ref(threadsStore.repliesCount(thread.value['.key']))
-const numContributors = ref(threadsStore.contributorsCount(thread.value['.key']))
+const numReplies = computed(() => threadsStore.repliesCount(thread.value['.key']))
+const numContributors = computed(() => threadsStore.contributorsCount(thread.value['.key']))
 
 const threadCountText = computed(() => {
   let text = pluralize(numReplies.value, 'reply', 'replies')
@@ -39,6 +39,7 @@ const save = (data: NewPost) => {
   }
   postsStore.addPost(newPost)
   threadsStore.addPostId(threadId, postId)
+  threadsStore.addContributor(threadId, usersStore.authId)
   usersStore.addPostId(usersStore.authId, postId)
 }
 </script>
@@ -52,11 +53,12 @@ const save = (data: NewPost) => {
       >
     </h1>
 
-    <p>
-      By <a href="#">{{ user.name }}</a
-      >, <AppDate :timestamp="thread.publishedAt * 1000" />.
-      <span class="hide-mobile text-faded text-small">{{ threadCountText }}</span>
-    </p>
+    <div class="flex justify-between">
+      <p>
+        By <a href="#">{{ user.name }} </a>, <AppDate :timestamp="thread.publishedAt * 1000" />.
+      </p>
+      <div class="hide-mobile text-faded text-small">{{ threadCountText }}</div>
+    </div>
 
     <PostList :posts="thread.posts" />
 
