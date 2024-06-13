@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import PostList from '@/components/PostList.vue'
 import PostEditor, { type NewPost } from '@/components/PostEditor.vue'
 import { useThreadsStore } from '@/stores/ThreadsStore.ts'
