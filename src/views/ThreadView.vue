@@ -14,10 +14,10 @@ const threadsStore = useThreadsStore()
 const postsStore = usePostsStore()
 const usersStore = useUsersStore()
 
-const thread = computed(() => threadsStore.threads[threadId])
-const user = computed(() => usersStore.users[thread.value.userId])
-const numReplies = computed(() => threadsStore.repliesCount(thread.value['.key']))
-const numContributors = computed(() => threadsStore.contributorsCount(thread.value['.key']))
+const thread = computed(() => threadsStore.thread(threadId))
+const user = computed(() => (thread.value ? usersStore.user(thread.value.userId) : null))
+const numReplies = computed(() => threadsStore.repliesCount(thread.value))
+const numContributors = computed(() => threadsStore.contributorsCount(thread.value))
 
 const threadCountText = computed(() => {
   let text = pluralize(numReplies.value, 'reply', 'replies')
@@ -37,20 +37,18 @@ const save = (data: NewPost) => {
     userId: usersStore.authId,
     '.key': postId
   }
-  postsStore.addPost(newPost)
-  threadsStore.addPostId(threadId, postId)
-  threadsStore.addContributor(threadId, usersStore.authId)
-  usersStore.addPostId(usersStore.authId, postId)
+  // postsStore.addPost(newPost)
+  // threadsStore.addPostId(threadId, postId)
+  // threadsStore.addContributor(threadId, usersStore.authId)
+  // usersStore.addPostId(usersStore.authId, postId)
 }
 </script>
 
 <template>
-  <div class="basis-10/12 mt-6">
+  <div v-if="thread && user" class="basis-10/12 mt-6">
     <h1>
       {{ thread.title }}
-      <RouterLink :to="{ name: 'ThreadEdit', params: { id: thread['.key'] } }"
-        >Edit thread</RouterLink
-      >
+      <RouterLink :to="{ name: 'ThreadEdit', params: { id: thread.id } }">Edit thread</RouterLink>
     </h1>
 
     <div class="flex justify-between">

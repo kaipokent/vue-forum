@@ -1,33 +1,35 @@
 import { defineStore } from 'pinia'
-import { threads } from '../data.json'
-import type { Thread, Threads } from '@/utils/types.ts'
+import type { Thread } from '@/utils/types.ts'
+import { useDatabaseList, useDatabaseObject } from 'vuefire'
+import { threadsRef } from '@/firebaseConfig.ts'
+import { computed } from 'vue'
 
-interface State {
-  threads: Threads
-}
+export const useThreadsStore = defineStore('threads', () => {
+  const threads = useDatabaseObject<Record<string, Thread>>(threadsRef)
+  const threadsList = useDatabaseList<Thread>(threadsRef)
 
-export const useThreadsStore = defineStore('threads', {
-  state: (): State => ({ threads }),
-  getters: {
-    values: (state) => Object.values(state.threads),
-    repliesCount: (state: State) => (id: string) =>
-      Object.values(state.threads[id].posts)
-        ? Object.values(state.threads[id].posts).length - 1
-        : 0,
-    contributorsCount: (state: State) => (id: string) =>
-      Object.values(state.threads[id].contributors || []).length
-  },
-  actions: {
-    addPostId(threadId: string, postId: string) {
-      this.threads[threadId].posts[postId] = postId
-    },
-    createThread(thread: Thread) {
-      this.threads[thread['.key']] = thread
-    },
-    addContributor(threadId: string, userId: string) {
-      if (!this.threads[threadId].contributors[userId]) {
-        this.threads[threadId].contributors[userId] = userId
-      }
-    }
-  }
+  const thread = computed(() => (id: string) => {
+    return threads.value ? threads.value[id] : null
+  })
+
+  const repliesCount = computed(() => (thread: Thread | null) => {
+    return thread?.posts ? Object.keys(thread.posts).length - 1 : 0
+  })
+  const contributorsCount = computed(() => (thread: Thread | null) => {
+    return thread?.contributors ? Object.keys(thread.contributors).length : 0
+  })
+
+  // function addPostId(threadId: string, postId: string) {
+  //   this.threads[threadId].posts[postId] = postId
+  // }
+  // function createThread(thread: Thread) {
+  //   this.threads[thread.id] = thread
+  // }
+  // function addContributor(threadId: string, userId: string) {
+  //   if (!this.threads[threadId].contributors[userId]) {
+  //     this.threads[threadId].contributors[userId] = userId
+  //   }
+  // }
+
+  return { threads, threadsList, thread, repliesCount, contributorsCount }
 })

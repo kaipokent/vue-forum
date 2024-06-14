@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia'
-import { posts } from '../data.json'
 import type { Post } from '@/utils/types.ts'
+import { useDatabaseList, useDatabaseObject } from 'vuefire'
+import { postsRef } from '@/firebaseConfig.ts'
+import { computed } from 'vue'
 
-interface State {
-  posts: Record<string, Post>
-}
+export const usePostsStore = defineStore('posts', () => {
+  const posts = useDatabaseObject<Record<string, Post>>(postsRef)
+  const postsList = useDatabaseList<Post>(postsRef)
 
-export const usePostsStore = defineStore('posts', {
-  state: (): State => ({ posts }),
-  actions: {
-    addPost(post: Post) {
-      this.posts[post['.key']] = post
-    }
-  }
+  const post = computed(() => (id: string) => {
+    return posts.value ? posts.value[id] : null
+  })
+  // function addPost(post: Post) {
+  //   this.posts[post.id] = post
+  // }
+  return { posts, postsList, post }
 })

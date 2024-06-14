@@ -1,4 +1,23 @@
-export type Post = {
+export interface Category {
+  forums: Record<string, string>
+  name: string
+  slug: string
+  id: string
+}
+
+export interface Forum {
+  categoryId: string
+  description: string
+  lastPostId: string
+  name: string
+  slug: string
+  threads?: Record<string, string>
+  id: string
+}
+
+export type Moderators = Record<string, string>
+
+export interface Post {
   edited?: {
     at: number
     by: string
@@ -8,10 +27,17 @@ export type Post = {
   text: string
   threadId: string
   userId: string
-  '.key': string
+  id: string
 }
 
-export type Thread = {
+export interface Stats {
+  postsCount: number
+  threadsCount: number
+  usersCount: number
+  usersOnline: number
+}
+
+export interface Thread {
   contributors: Record<string, string>
   firstPostId: string
   forumId: string
@@ -22,11 +48,10 @@ export type Thread = {
   slug: string
   title: string
   userId: string
-  '.key': string
+  id: string
 }
-export type Threads = Record<string, Thread>
 
-export type User = {
+export interface User {
   avatar: string
   bio?: string
   email: string
@@ -39,26 +64,5 @@ export type User = {
   posts?: Record<string, string>
   website?: string
   twitter?: string
-  '.key': string
-}
-
-export type Forum = {
-  categoryId: string
-  description: string
-  lastPostId: string
-  name: string
-  slug: string
-  threads?: Record<string, string>
-  '.key': string
-}
-
-export type Category = {
-  forums: Record<string, string>
-  name: string
-  slug: string
-  '.key': string
-}
-
-export type Categories = {
-  [k: string]: Category
+  id: string
 }

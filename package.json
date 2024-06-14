@@ -17,12 +17,14 @@
     "@formkit/addons": "^1.6.5",
     "@formkit/vue": "^1.6.5",
     "@vueuse/core": "^10.10.0",
+    "firebase": "^10.12.2",
     "pinia": "^2.1.7",
     "primeicons": "^7.0.0",
     "primevue": "^4.0.0-beta.4",
     "uuid": "^10.0.0",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vuefire": "^3.1.23"
   },
   "devDependencies": {
     "@formkit/core": "^1.6.5",

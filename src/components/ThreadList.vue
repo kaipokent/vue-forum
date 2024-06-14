@@ -9,6 +9,6 @@ const { threads } = defineProps<{ threads: Thread[] }>()
   <div class="thread-list p-0 bg-white">
     <h2 class="list-title">Threads</h2>
 
-    <ThreadListItem v-for="thread in threads" :key="thread['.key']" :thread="thread" />
+    <ThreadListItem v-for="thread in threads" :key="thread.id" :thread="thread" />
   </div>
 </template>

@@ -12,19 +12,25 @@ const usersStore = useUsersStore()
 const threadsStore = useThreadsStore()
 
 const replyText = computed(() => {
-  const replies = threadsStore.repliesCount(thread['.key'])
+  const replies = threadsStore.repliesCount(thread)
   return pluralize(replies, 'reply', 'replies')
 })
 
-const user = computed(() => usersStore.users[thread.userId])
-const lastPostUser = computed(() => usersStore.users[postsStore.posts[thread.lastPostId].userId])
+const user = computed(() => usersStore.user(thread.userId))
+const lastPostUser = computed(() => {
+  const post = postsStore.post(thread.lastPostId)
+  return post ? usersStore.user(post.userId) : null
+})
 </script>
 
 <template>
-  <div class="thread flex items-center justify-between py-1.5 pr-0 pl-5 min-h-11">
+  <div
+    v-if="user && lastPostUser"
+    class="thread flex items-center justify-between py-1.5 pr-0 pl-5 min-h-11"
+  >
     <div>
       <p>
-        <RouterLink :to="{ name: 'Thread', params: { id: thread['.key'] } }">{{
+        <RouterLink :to="{ name: 'Thread', params: { id: thread.id } }">{{
           thread.title
         }}</RouterLink>
       </p>

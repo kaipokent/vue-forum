@@ -14,32 +14,27 @@ const usersStore = useUsersStore()
 const editing = ref(false)
 const canEdit = ref(post.userId === usersStore.authId)
 
-const user = computed(() => usersStore.users[post.userId])
+const user = computed(() => usersStore.user(post.userId))
 const postCountText = computed(() => {
-  const posts = user.value?.posts
-  if (!posts) {
-    return '0 posts'
-  } else {
-    const postCount = usersStore.postCount(user.value['.key'])
-    return `${postCount} post${postCount > 1 ? 's' : ''}`
-  }
+  const postCount = usersStore.postCount(user.value)
+  return `${postCount} post${postCount > 1 ? 's' : ''}`
 })
 
 const save = (data: NewPost) => {
-  postsStore.addPost({
-    ...post,
-    text: data.postBody,
-    edited: {
-      at: Math.floor(Date.now() / 1000),
-      by: usersStore.authId,
-      moderated: false
-    }
-  })
+  // postsStore.addPost({
+  //   ...post,
+  //   text: data.postBody,
+  //   edited: {
+  //     at: Math.floor(Date.now() / 1000),
+  //     by: usersStore.authId,
+  //     moderated: false
+  //   }
+  // })
 }
 </script>
 
 <template>
-  <div class="post">
+  <div v-if="user" class="post">
     <div class="user-info">
       <a href="#" class="user-name">{{ user.name }}</a>
 

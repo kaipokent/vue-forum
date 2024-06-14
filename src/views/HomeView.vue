@@ -9,8 +9,8 @@ const categoriesStore = useCategoriesStore()
   <div class="basis-11/12">
     <h1>Welcome to the forum</h1>
     <CategoryListItem
-      v-for="category in categoriesStore.values"
-      :key="category['.key']"
+      v-for="category in categoriesStore.categories"
+      :key="category.id"
       :category="category"
     />
   </div>

@@ -12,7 +12,7 @@ const { post } = defineProps<{ post?: Post }>()
 const emits = defineEmits<{ (e: 'save', data: NewPost): void; (e: 'close'): void }>()
 
 const formData = ref({ postBody: post ? post.text : '' })
-const formId = ref(post ? `postEditor${post['.key']}` : 'postEditor')
+const formId = ref(post ? `postEditor${post.id}` : 'postEditor')
 
 const submitForm = (data: NewPost) => {
   emits('save', data)

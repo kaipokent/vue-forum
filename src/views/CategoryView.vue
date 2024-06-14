@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { ref, type UnwrapRef } from 'vue'
-import { useRoute } from 'vue-router'
-import type { Category } from '@/utils/types.ts'
+import { computed } from 'vue'
 import CategoryListItem from '@/components/CategoryListItem.vue'
 import { useCategoriesStore } from '@/stores/CategoriesStore.ts'
 
-const route = useRoute()
+const { id: routeId } = defineProps<{ id: string }>()
+
 const categoriesStore = useCategoriesStore()
 
-const category: UnwrapRef<Category> = ref<Category>(categoriesStore.categories[route.params.id])
+const category = computed(() => categoriesStore.category(routeId))
 </script>
 
 <template>
-  <div class="basis-11/12 mt-6">
+  <div v-if="category" class="basis-11/12 mt-6">
     <h1>{{ category.name }}</h1>
     <CategoryListItem :category="category" />
   </div>

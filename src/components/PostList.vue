@@ -7,10 +7,10 @@ const postsStore = usePostsStore()
 </script>
 
 <template>
-  <div class="post-list">
+  <div class="post-list" v-if="postsStore.posts">
     <PostListItem
       v-for="post in posts"
-      :key="postsStore.posts[post]['.key']"
+      :key="postsStore.posts[post].id"
       :post="postsStore.posts[post]"
     />
   </div>

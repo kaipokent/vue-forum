@@ -7,6 +7,6 @@ const { categories } = defineProps<{ categories: Record<string, Category> }>()
 
 <template>
   <div>
-    <CategoryListItem v-for="category in categories" :key="category['.key']" :category="category" />
+    <CategoryListItem v-for="category in categories" :key="category.id" :category="category" />
   </div>
 </template>

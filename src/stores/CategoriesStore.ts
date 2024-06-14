@@ -1,14 +1,16 @@
 import { defineStore } from 'pinia'
-import { categories } from '../data.json'
+import { categoriesRef } from '@/firebaseConfig.ts'
+import { useDatabaseList, useDatabaseObject } from 'vuefire'
 import type { Category } from '@/utils/types.ts'
+import { computed } from 'vue'
 
-interface State {
-  categories: Record<string, Category>
-}
+export const useCategoriesStore = defineStore('categories', () => {
+  const categories = useDatabaseObject<Record<string, Category>>(categoriesRef)
+  const categoriesList = useDatabaseList<Category>(categoriesRef)
 
-export const useCategoriesStore = defineStore('categories', {
-  state: (): State => ({ categories }),
-  getters: {
-    values: (state) => Object.values(state.categories)
-  }
+  const category = computed(() => (id: string) => {
+    return categories.value ? categories.value[id] : null
+  })
+
+  return { categories, categoriesList, category }
 })

@@ -6,5 +6,5 @@ const { forums } = defineProps<{ forums: Forum[] }>()
 </script>
 
 <template>
-  <ForumListItem v-for="forum in forums" :key="forum['.key']" :forum="forum" />
+  <ForumListItem v-for="forum in forums" :key="forum.id" :forum="forum" />
 </template>

@@ -28,7 +28,8 @@ const router = createRouter({
     {
       path: '/forum/:id',
       name: 'Forum',
-      component: () => import('@/views/ForumView.vue')
+      component: () => import('@/views/ForumView.vue'),
+      props: true
     },
     {
       path: '/forum/:id/new/',
@@ -39,7 +40,8 @@ const router = createRouter({
     {
       path: '/category/:id',
       name: 'Category',
-      component: () => import('@/views/CategoryView.vue')
+      component: () => import('@/views/CategoryView.vue'),
+      props: true
     },
     {
       path: '/me',

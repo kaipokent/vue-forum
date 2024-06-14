@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import Menubar from 'primevue/menubar'
 import Menu from 'primevue/menu'
 import Button from 'primevue/button'
@@ -9,7 +9,8 @@ import { useUsersStore } from '@/stores/UsersStore.ts'
 const router = useRouter()
 const usersStore = useUsersStore()
 
-const user = ref(usersStore.authUser)
+const user = computed(() => usersStore.authUser)
+
 const userMenu = ref()
 const userMenuItems = ref([
   {
@@ -65,7 +66,7 @@ const toggle = (event: MouseEvent) => {
       <template #start>
         <img class="logo" src="../assets/img/vueschool-logo.svg" alt="" />
       </template>
-      <template #end>
+      <template #end v-if="user">
         <div class="navbar-user flex items-center gap-2">
           <Button
             type="button"

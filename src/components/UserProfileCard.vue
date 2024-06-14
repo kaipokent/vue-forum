@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import type { User } from '@/utils/types.ts'
 import { pluralize } from '@/utils/pluralize.ts'
 import { useCloned, useDateFormat, useTimeAgo } from '@vueuse/core'
@@ -14,9 +14,8 @@ const lastVisited = useTimeAgo(user.lastVisitAt * 1000)
 const { cloned: activeUser } = useCloned(user)
 
 const editing = ref(false)
-
-const userPostsCount = ref(usersStore.postCount(user['.key']))
-const userThreadsCount = ref(usersStore.threadCount(user['.key']))
+const userPostsCount = computed(() => usersStore.postCount(user))
+const userThreadsCount = computed(() => usersStore.threadCount(user))
 
 const enableEdit = () => {
   editing.value = true
@@ -27,7 +26,7 @@ const cancel = () => {
 }
 
 const updateUser = () => {
-  usersStore.updateUser(activeUser.value)
+  // usersStore.updateUser(activeUser.value)
   cancel()
 }
 </script>
@@ -42,7 +41,7 @@ const updateUser = () => {
         id="userEdit"
         name="userEdit"
         type="form"
-        v-model="activeUser"
+        v-model="activeUser as {}"
         @submit="updateUser"
       >
         <FormKit
@@ -86,7 +85,7 @@ const updateUser = () => {
           validation="url"
         />
         <template #actions="{ state }">
-          <div class="flex space-between mr-5">
+          <div class="flex space-between">
             <Button label="Cancel" :disabled="state.loading" @click="cancel" severity="info" />
             <Button type="submit" label="Save" :disabled="state.loading" />
           </div>

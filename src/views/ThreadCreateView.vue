@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useForumsStore } from '@/stores/ForumsStore.ts'
 import { v4 as uuid } from 'uuid'
@@ -17,7 +17,7 @@ const threadsStore = useThreadsStore()
 const postsStore = usePostsStore()
 const usersStore = useUsersStore()
 
-const forum = ref(forumsStore.forums[forumId])
+const forum = computed(() => forumsStore.forum(forumId))
 
 const save = (thread: NewThread) => {
   const threadId = uuid()
@@ -43,18 +43,18 @@ const save = (thread: NewThread) => {
     title: thread.title,
     userId: usersStore.authId
   }
-  forumsStore.addThread(forumId, threadId)
-  threadsStore.createThread(threadData)
-  postsStore.addPost(post)
-  usersStore.addPostId(usersStore.authId, postId)
-  usersStore.addThreadId(usersStore.authId, threadId)
+  // forumsStore.addThread(forumId, threadId)
+  // threadsStore.createThread(threadData)
+  // postsStore.addPost(post)
+  // usersStore.addPostId(usersStore.authId, postId)
+  // usersStore.addThreadId(usersStore.authId, threadId)
 
   router.push({ name: 'Thread', params: { id: threadId } })
 }
 </script>
 
 <template>
-  <div class="col-full push-top">
+  <div v-if="forum" class="col-full push-top">
     <h1>
       Create new thread in <i>{{ forum.name }}</i>
     </h1>

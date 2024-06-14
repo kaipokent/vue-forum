@@ -1,20 +1,16 @@
 <script setup lang="ts">
 import { useUsersStore } from '@/stores/UsersStore.ts'
-import { ref, watchEffect } from 'vue'
+import { computed } from 'vue'
 import PostList from '@/components/PostList.vue'
 import UserProfileCard from '@/components/UserProfileCard.vue'
 
 const usersStore = useUsersStore()
 
-const user = ref(usersStore.authUser)
-
-watchEffect(() => {
-  user.value = usersStore.authUser
-})
+const user = computed(() => usersStore.authUser)
 </script>
 
 <template>
-  <div class="flex-grid">
+  <div class="flex-grid" v-if="user">
     <UserProfileCard :user="user" />
 
     <div class="col-7 push-top">

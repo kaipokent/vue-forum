@@ -11,7 +11,7 @@ const forumsStore = useForumsStore()
 <template>
   <div class="forum-listing">
     <div class="forum-details">
-      <RouterLink :to="{ name: 'Forum', params: { id: forum['.key'] } }" class="text-xl">
+      <RouterLink :to="{ name: 'Forum', params: { id: forum.id } }" class="text-xl">
         {{ forum.name }}
       </RouterLink>
       <p>{{ forum.description }}</p>
@@ -19,7 +19,7 @@ const forumsStore = useForumsStore()
 
     <div class="threads-count">
       <p>
-        {{ pluralize(forumsStore.threadCount(forum['.key']), 'thread') }}
+        {{ pluralize(forumsStore.threadCount(forum), 'thread') }}
       </p>
     </div>
 

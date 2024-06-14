@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useThreadsStore } from '@/stores/ThreadsStore.ts'
 import { usePostsStore } from '@/stores/PostsStore.ts'
@@ -14,8 +14,11 @@ const threadsStore = useThreadsStore()
 const postsStore = usePostsStore()
 const usersStore = useUsersStore()
 
-const currentThread = ref(threadsStore.threads[threadId])
-const currentPost = ref(postsStore.posts[currentThread.value.firstPostId])
+const currentThread = computed(() => threadsStore.thread(threadId))
+const currentPost = computed(() => {
+  return currentThread.value ? postsStore.post(currentThread.value?.firstPostId) : null
+})
+// const currentPost = ref(postsStore.post(currentThread.value?.firstPostId))
 
 const save = (thread: NewThread) => {
   const post = {
@@ -32,15 +35,15 @@ const save = (thread: NewThread) => {
     slug: toSlug(thread.title),
     title: thread.title
   }
-  threadsStore.createThread(threadData)
-  postsStore.addPost(post)
+  // threadsStore.createThread(threadData)
+  // postsStore.addPost(post)
 
   router.push({ name: 'Thread', params: { id: threadId } })
 }
 </script>
 
 <template>
-  <div class="col-full push-top">
+  <div v-if="currentPost && currentThread" class="col-full push-top">
     <h1>Editing thread</h1>
 
     <ThreadEditor
