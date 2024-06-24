@@ -7,14 +7,16 @@ import { useUsersStore } from '@/stores/UsersStore.ts'
 import { pluralize } from '@/utils/pluralize.ts'
 import { v4 as uuid } from 'uuid'
 import { usePostsStore } from '@/stores/PostsStore.ts'
+import { useRoute } from 'vue-router'
 
-const { id: threadId } = defineProps<{ id: string }>()
+const route = useRoute('/thread/[id]')
+const threadId = computed(() => route.params.id)
 
 const threadsStore = useThreadsStore()
 const postsStore = usePostsStore()
 const usersStore = useUsersStore()
 
-const thread = computed(() => threadsStore.threads[threadId])
+const thread = computed(() => threadsStore.threads[threadId.value])
 const user = computed(() => usersStore.users[thread.value.userId])
 const numReplies = computed(() => threadsStore.repliesCount(thread.value['.key']))
 const numContributors = computed(() => threadsStore.contributorsCount(thread.value['.key']))
@@ -33,22 +35,22 @@ const save = (data: NewPost) => {
   const newPost = {
     text: data.postBody,
     publishedAt: Math.floor(Date.now() / 1000),
-    threadId: threadId,
+    threadId: threadId.value,
     userId: usersStore.authId,
     '.key': postId
   }
   postsStore.addPost(newPost)
-  threadsStore.addPostId(threadId, postId)
-  threadsStore.addContributor(threadId, usersStore.authId)
+  threadsStore.addPostId(threadId.value, postId)
+  // threadsStore.addContributor(threadId, usersStore.authId)
   usersStore.addPostId(usersStore.authId, postId)
 }
 </script>
 
 <template>
-  <div class="basis-10/12 mt-6">
+  <div v-if="thread" class="basis-10/12 mt-6">
     <h1>
       {{ thread.title }}
-      <RouterLink :to="{ name: 'ThreadEdit', params: { id: thread['.key'] } }"
+      <RouterLink :to="{ name: '/thread/[id].edit', params: { id: thread['.key'] } }"
         >Edit thread</RouterLink
       >
     </h1>

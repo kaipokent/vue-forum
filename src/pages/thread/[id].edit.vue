@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useThreadsStore } from '@/stores/ThreadsStore.ts'
 import { usePostsStore } from '@/stores/PostsStore.ts'
 import { useUsersStore } from '@/stores/UsersStore.ts'
 import { toSlug } from '@/utils/toSlug.ts'
 import ThreadEditor, { type NewThread } from '@/components/ThreadEditor.vue'
 
-const { id: threadId } = defineProps<{ id: string }>()
+const route = useRoute('/thread/[id]')
+const threadId = computed(() => route.params.id)
 
 const router = useRouter()
 const threadsStore = useThreadsStore()
 const postsStore = usePostsStore()
 const usersStore = useUsersStore()
 
-const currentThread = ref(threadsStore.threads[threadId])
+const currentThread = ref(threadsStore.threads[threadId.value])
 const currentPost = ref(postsStore.posts[currentThread.value.firstPostId])
 
 const save = (thread: NewThread) => {
@@ -35,7 +36,7 @@ const save = (thread: NewThread) => {
   threadsStore.createThread(threadData)
   postsStore.addPost(post)
 
-  router.push({ name: 'Thread', params: { id: threadId } })
+  router.push({ name: '/thread/[id]', params: { id: threadId.value } })
 }
 </script>
 

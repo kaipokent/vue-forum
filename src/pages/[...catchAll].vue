@@ -8,7 +8,7 @@ import Button from 'primevue/button'
     <p class="text-5xl font-100">What are you doing here?</p>
 
     <div class="mt-8">
-      <RouterLink to="/">
+      <RouterLink :to="{ name: '/' }">
         <Button label="Run away" />
       </RouterLink>
     </div>

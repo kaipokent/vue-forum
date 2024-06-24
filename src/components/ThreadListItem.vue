@@ -24,7 +24,7 @@ const lastPostUser = computed(() => usersStore.users[postsStore.posts[thread.las
   <div class="thread flex items-center justify-between py-1.5 pr-0 pl-5 min-h-11">
     <div>
       <p>
-        <RouterLink :to="{ name: 'Thread', params: { id: thread['.key'] } }">{{
+        <RouterLink :to="{ name: '/thread/[id]', params: { id: thread['.key'] } }">{{
           thread.title
         }}</RouterLink>
       </p>

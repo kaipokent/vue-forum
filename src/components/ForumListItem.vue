@@ -11,7 +11,7 @@ const forumsStore = useForumsStore()
 <template>
   <div class="forum-listing">
     <div class="forum-details">
-      <RouterLink :to="{ name: 'Forum', params: { id: forum['.key'] } }" class="text-xl">
+      <RouterLink :to="{ name: '/forum/[id]', params: { id: forum['.key'] } }" class="text-xl">
         {{ forum.name }}
       </RouterLink>
       <p>{{ forum.description }}</p>

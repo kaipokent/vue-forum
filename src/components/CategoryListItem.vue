@@ -16,7 +16,7 @@ const forumsForCategory = computed(() => {
 <template>
   <div class="forum-list p-0 bg-white">
     <h2 class="list-title">
-      <RouterLink :to="{ name: 'Category', params: { id: category['.key'] } }">
+      <RouterLink :to="{ name: '/category/[id]', params: { id: category['.key'] } }">
         {{ category.name }}
       </RouterLink>
     </h2>

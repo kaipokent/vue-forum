@@ -12,7 +12,7 @@ export type Post = {
 }
 
 export type Thread = {
-  contributors: Record<string, string>
+  contributors?: Record<string, string>
   firstPostId: string
   forumId: string
   lastPostAt: number
@@ -24,7 +24,6 @@ export type Thread = {
   userId: string
   '.key': string
 }
-export type Threads = Record<string, Thread>
 
 export type User = {
   avatar: string
@@ -43,12 +42,13 @@ export type User = {
 }
 
 export type Forum = {
-  categoryId: string
+  categoryId?: string
   description: string
-  lastPostId: string
+  lastPostId?: string
   name: string
   slug: string
   threads?: Record<string, string>
+  parentId?: string
   '.key': string
 }
 

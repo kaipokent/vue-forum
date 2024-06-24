@@ -5,10 +5,10 @@ import type { Category } from '@/utils/types.ts'
 import CategoryListItem from '@/components/CategoryListItem.vue'
 import { useCategoriesStore } from '@/stores/CategoriesStore.ts'
 
-const route = useRoute()
+const route = useRoute('/category/[id]')
 const categoriesStore = useCategoriesStore()
 
-const category: UnwrapRef<Category> = ref<Category>(categoriesStore.categories[route.params.id])
+const category = ref<Category>(categoriesStore.categories[route.params.id])
 </script>
 
 <template>

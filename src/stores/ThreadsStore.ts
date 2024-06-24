@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 import { threads } from '../data.json'
-import type { Thread, Threads } from '@/utils/types.ts'
+import type { Thread } from '@/utils/types.ts'
 
 interface State {
-  threads: Threads
+  threads: Record<string, Thread>
 }
 
 export const useThreadsStore = defineStore('threads', {
@@ -23,11 +23,11 @@ export const useThreadsStore = defineStore('threads', {
     },
     createThread(thread: Thread) {
       this.threads[thread['.key']] = thread
-    },
-    addContributor(threadId: string, userId: string) {
-      if (!this.threads[threadId].contributors[userId]) {
-        this.threads[threadId].contributors[userId] = userId
-      }
     }
+    // addContributor(threadId: string, userId: string) {
+    //   if (this.threads[threadId].contributors && !this.threads[threadId].contributors[userId]) {
+    //     this.threads[threadId].contributors[userId] = userId
+    //   }
+    // }
   }
 })

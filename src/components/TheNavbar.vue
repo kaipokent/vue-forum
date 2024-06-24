@@ -17,7 +17,7 @@ const userMenuItems = ref([
       {
         label: 'View profile',
         command: () => {
-          router.push({ name: 'Profile' })
+          router.push({ name: '/profile/' })
         }
       },
       {
@@ -31,25 +31,25 @@ const items = ref([
     label: 'Home',
     icon: 'pi pi-home',
     command: () => {
-      router.push({ name: 'Home' })
+      router.push({ name: '/' })
     }
   },
   {
     label: 'Categories',
     command: () => {
-      router.push({ name: 'Category' })
+      // router.push({ name: 'category' })
     }
   },
   {
     label: 'Forums',
     command: () => {
-      router.push({ name: 'Forum' })
+      // router.push({ name: 'forum' })
     }
   },
   {
     label: 'Threads',
     command: () => {
-      router.push({ name: 'Thread' })
+      // router.push({ name: 'Thread' })
     }
   }
 ])
